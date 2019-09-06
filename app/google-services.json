@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "258166756115",
+    "firebase_url": "https://agstar-cropcare-user.firebaseio.com",
+    "project_id": "agstar-cropcare-user",
+    "storage_bucket": "agstar-cropcare-user.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:258166756115:android:fb5827a62a4b2ab7",
+        "android_client_info": {
+          "package_name": "project.emarge.cropcare.user"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "258166756115-36kktg3jqihud44rmd7sq76nj4q11gp6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7nPAl3OYY6viwIH7eXubsopzG7Gp5yeQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "258166756115-36kktg3jqihud44rmd7sq76nj4q11gp6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:258166756115:android:c2ab0cf02224919e",
+        "android_client_info": {
+          "package_name": "project.emarge.cropcarerep"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "258166756115-36kktg3jqihud44rmd7sq76nj4q11gp6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7nPAl3OYY6viwIH7eXubsopzG7Gp5yeQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "258166756115-36kktg3jqihud44rmd7sq76nj4q11gp6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
