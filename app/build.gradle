@@ -60,7 +60,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             minifyEnabled true
             buildConfigField "String", "RESOURCE_ID", '\"5050\"'
-           // buildConfigField "String", "API_BASE_URL", '\"http://220.247.244.22:8082/Agstar_Cropcare_Production/api/\"'
             buildConfigField "String", "API_BASE_URL", '\"http://220.247.244.22:8082/AgStar_Dev/api/\"'
 
 
