@@ -233,6 +233,8 @@ class HomeRepo(application: Application) {
             jsonObject.add("VisitProducts", locJsonArr)
 
 
+            println("xxxxxxxxxxxxxxxxxx : "+jsonObject)
+
 
             apiInterface.saveOrder(jsonObject)
                 .subscribeOn(Schedulers.io())

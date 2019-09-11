@@ -21,6 +21,8 @@ data class Visits(
     @SerializedName("dealerCode")
     var visitsDealerCode: String? = null,
 
+    @SerializedName("name")
+    var visitsRepName: String? = null,
 
     @SerializedName("order")
     var visitsOrder: Orders = Orders(),
