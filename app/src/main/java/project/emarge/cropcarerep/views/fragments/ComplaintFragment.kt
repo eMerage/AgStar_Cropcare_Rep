@@ -393,6 +393,7 @@ class ComplaintFragment : Fragment(), DatePickerDialog.OnDateSetListener {
                 var listProCat = ArrayList<ProductsCategory>()
                 listProCat.add(ProductsCategory(0, "All"))
                 listProCat.addAll(result)
+
                 val adapter = ProductCatSpinnerAdapter(
                     context as Activity,
                     R.layout.item_spinner, listProCat

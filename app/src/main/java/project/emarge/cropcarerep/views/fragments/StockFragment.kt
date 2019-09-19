@@ -79,6 +79,8 @@ class StockFragment : Fragment() {
     var isImageFromCamera: Boolean = false
     var currentPhotoPath: String = ""
 
+    var listProCat = ArrayList<ProductsCategory>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -119,14 +121,7 @@ class StockFragment : Fragment() {
             getSearchProducts(autoCompleteTextView_staock_products.text.toString())
         }
 
-        spinner_stock_pro_cat.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(p0: AdapterView<*>?) {}
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                var selectedProductsCategory: ProductsCategory = parent.getItemAtPosition(position) as ProductsCategory
-                selectedProCategoryID = selectedProductsCategory.productsID!!
-                getProducts(selectedProCategoryID)
-            }
-        }
+
 
         button_stock_save.setOnClickListener {
             if (saveButtonEnable) {
@@ -183,7 +178,7 @@ class StockFragment : Fragment() {
         pageViewModel.getProductCategory().observe(this, Observer<ArrayList<ProductsCategory>> {
             it?.let { result ->
                 progressBar_stock.visibility = View.GONE
-                var listProCat = ArrayList<ProductsCategory>()
+
                 listProCat.add(ProductsCategory(0, "All"))
                 listProCat.addAll(result)
                 val adapter = ProductCatSpinnerAdapter(
@@ -191,6 +186,16 @@ class StockFragment : Fragment() {
                     R.layout.item_spinner, listProCat
                 )
                 spinner_stock_pro_cat.adapter = adapter
+
+                spinner_stock_pro_cat.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                    override fun onNothingSelected(p0: AdapterView<*>?) {}
+                    override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                        var selectedProductsCategory: ProductsCategory = parent.getItemAtPosition(position) as ProductsCategory
+                        selectedProCategoryID = selectedProductsCategory.productsID!!
+                        getProducts(selectedProCategoryID)
+                    }
+                }
+
             }
         })
 

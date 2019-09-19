@@ -392,6 +392,9 @@ class HomeRepo(application: Application) {
         } else {
             progressBar.visibility = View.VISIBLE
 
+            println("cccccccc savePaymentVisitWithImageDetails 1 ")
+
+
             val jsonObject = JsonObject()
             jsonObject.addProperty("ID", visitID)
             val locJsonArr = JsonArray()
@@ -402,11 +405,19 @@ class HomeRepo(application: Application) {
                 ob.addProperty("PaymentType", item.paymentType)
                 ob.addProperty("PaymentValue", item.paymentValue)
                 ob.addProperty("ImageCode", item.paymentImageCode)
+                ob.addProperty("ImageTypeID", 1)
+                ob.addProperty("Name", item.paymentImageName)
+
+
+
                 locJsonArr.add(ob)
             }
             jsonObject.add("PaymentsList", locJsonArr)
 
-            apiInterface.savePaymentVisit(jsonObject)
+
+            println("cccccccc savePaymentVisitWithImageDetails : "+jsonObject)
+
+            apiInterface.savePaymentVisitWithImageDetails(jsonObject)
                 .subscribeOn(Schedulers.io())
                 .doOnError { it }
                 .doOnTerminate { }
@@ -416,13 +427,14 @@ class HomeRepo(application: Application) {
                     }
 
                     override fun onNext(log: Int) {
+
                         if (log != null) {
                             data.postValue(log)
                         } else {
                             Toast.makeText(app, "Payment Adding fail,Please try again ", Toast.LENGTH_LONG).show()
                         }
 
-                        savePaymentImageDetails(addedPayment)
+
                     }
 
                     override fun onError(e: Throwable) {
@@ -432,6 +444,9 @@ class HomeRepo(application: Application) {
 
                     override fun onComplete() {
                         progressBar.visibility = View.GONE
+                        savePaymentImage(addedPayment)
+
+
                     }
                 })
 
@@ -440,49 +455,7 @@ class HomeRepo(application: Application) {
         return data
     }
 
-    fun savePaymentImageDetails(addedPayment: ArrayList<Payment>) {
-        if (!app.isConnectedToNetwork()) {
-        } else {
-            val locJsonArr = JsonArray()
-            for (item in addedPayment) {
-                if (item.paymentImageCode.isNullOrEmpty()) {
-                } else {
-                    val ob = JsonObject()
-                    ob.addProperty("ImageCode", item.paymentImageCode)
-                    ob.addProperty("ImageTypeID", 1)
-                    ob.addProperty("Name", item.paymentImageName)
-                    locJsonArr.add(ob)
 
-                }
-            }
-
-
-
-            apiInterface.saveImageDetails(locJsonArr)
-                .subscribeOn(Schedulers.io())
-                .doOnError { it }
-                .doOnTerminate { }
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<Image> {
-                    override fun onSubscribe(d: Disposable) {
-                    }
-
-                    override fun onNext(log: Image) {
-
-                    }
-
-                    override fun onError(e: Throwable) {
-                        Toast.makeText(app, networkErrorHandler(e).errorTitle, Toast.LENGTH_LONG).show()
-                    }
-
-                    override fun onComplete() {
-                        Toast.makeText(app, "Image Details Upload Complete", Toast.LENGTH_LONG).show()
-                        savePaymentImage(addedPayment)
-                    }
-                })
-        }
-
-    }
 
     fun savePaymentImage(addedPayment: ArrayList<Payment>?) {
         for (item in addedPayment!!) {
@@ -601,15 +574,18 @@ class HomeRepo(application: Application) {
                 ob.addProperty("ProductID", item.productsID)
                 ob.addProperty("ImageCode", item.productsStockImageCode)
                 ob.addProperty("Quantity", item.productsQTy)
+                ob.addProperty("ImageTypeID", 2)
+                ob.addProperty("Name", item.productsStockImageName)
+
                 locJsonArr.add(ob)
             }
             jsonObject.add("VisitProductsList", locJsonArr)
 
 
 
-            println("jjjjjjjjjjjjjjj : "+jsonObject)
+            println("vvvvvvvvvvv    saveStockVisitWithImageDetails : "+jsonObject)
 
-            apiInterface.saveStockVisit(jsonObject)
+            apiInterface.saveStockVisitWithImageDetails(jsonObject)
                 .subscribeOn(Schedulers.io())
                 .doOnError { it }
                 .doOnTerminate { }
@@ -633,7 +609,8 @@ class HomeRepo(application: Application) {
 
                     override fun onComplete() {
                         progressBar.visibility = View.GONE
-                        saveStockImageDetails(addedStock)
+                        saveStockImage(addedStock)
+
                     }
                 })
 
@@ -642,44 +619,6 @@ class HomeRepo(application: Application) {
         return data
     }
 
-    fun saveStockImageDetails(stock: ArrayList<Products>) {
-        if (!app.isConnectedToNetwork()) {
-
-        } else {
-            val locJsonArr = JsonArray()
-            for (item in stock) {
-                val ob = JsonObject()
-                ob.addProperty("ImageCode", item.productsStockImageCode)
-                ob.addProperty("ImageTypeID", 2)
-                ob.addProperty("Name", item.productsStockImageName)
-                locJsonArr.add(ob)
-            }
-
-            apiInterface.saveImageDetails(locJsonArr)
-                .subscribeOn(Schedulers.io())
-                .doOnError { it }
-                .doOnTerminate { }
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<Image> {
-                    override fun onSubscribe(d: Disposable) {
-                    }
-
-                    override fun onNext(log: Image) {
-
-                    }
-
-                    override fun onError(e: Throwable) {
-                        Toast.makeText(app, networkErrorHandler(e).errorTitle, Toast.LENGTH_LONG).show()
-                    }
-
-                    override fun onComplete() {
-                        Toast.makeText(app, "Image Details Upload Complete", Toast.LENGTH_LONG).show()
-                        saveStockImage(stock)
-                    }
-                })
-        }
-
-    }
 
     fun saveStockImage(stock: ArrayList<Products>) {
         for (item in stock) {
@@ -817,14 +756,19 @@ class HomeRepo(application: Application) {
                 ob.addProperty("BatchNo", item.complainBatchNumber)
                 ob.addProperty("ExpiryDate", item.complainExDate)
                 ob.addProperty("ImageCode", item.complainImgCode)
+
+                ob.addProperty("ImageTypeID", 3)
+                ob.addProperty("Name", item.complainImageName)
+
+
                 locJsonArr.add(ob)
             }
             jsonObject.add("ComplainsList", locJsonArr)
 
 
+            println("vvvvvvvvvvv    saveComplainVisitWithImageDetails : "+jsonObject)
 
-
-            apiInterface.saveComplainVisit(jsonObject)
+            apiInterface.saveComplainVisitWithImageDetails(jsonObject)
                 .subscribeOn(Schedulers.io())
                 .doOnError { it }
                 .doOnTerminate { }
@@ -848,7 +792,7 @@ class HomeRepo(application: Application) {
 
                     override fun onComplete() {
                         progressBar.visibility = View.GONE
-                        saveComplainImageDetails(addedComplain)
+                        saveComplainImage(addedComplain)
                     }
                 })
 
@@ -858,47 +802,6 @@ class HomeRepo(application: Application) {
     }
 
 
-    fun saveComplainImageDetails(complain: ArrayList<Complain>) {
-        if (!app.isConnectedToNetwork()) {
-
-        } else {
-            val locJsonArr = JsonArray()
-            for (item in complain) {
-                if (!item.complainImgCode.isNullOrEmpty()) {
-                    val ob = JsonObject()
-                    ob.addProperty("ImageCode", item.complainImgCode)
-                    ob.addProperty("ImageTypeID", 3)
-                    ob.addProperty("Name", item.complainImageName)
-                    locJsonArr.add(ob)
-
-                }
-            }
-
-            apiInterface.saveImageDetails(locJsonArr)
-                .subscribeOn(Schedulers.io())
-                .doOnError { it }
-                .doOnTerminate { }
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<Image> {
-                    override fun onSubscribe(d: Disposable) {
-                    }
-
-                    override fun onNext(log: Image) {
-
-                    }
-
-                    override fun onError(e: Throwable) {
-                        Toast.makeText(app, networkErrorHandler(e).errorTitle, Toast.LENGTH_LONG).show()
-                    }
-
-                    override fun onComplete() {
-                        Toast.makeText(app, "Image Details Upload Complete", Toast.LENGTH_LONG).show()
-                        saveComplainImage(complain)
-                    }
-                })
-        }
-
-    }
 
     fun saveComplainImage(complain: ArrayList<Complain>) {
         for (item in complain) {
