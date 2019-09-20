@@ -101,6 +101,7 @@ class HomeRepo(application: Application) {
 
 
     fun getserachProducts(input: String, listAllProducts: ArrayList<Products>): MutableLiveData<ArrayList<Products>> {
+
         val datagetProducts = MutableLiveData<ArrayList<Products>>()
         var listPro = ArrayList<Products>()
 
@@ -113,22 +114,29 @@ class HomeRepo(application: Application) {
 
                 }
             }
-            if (listPro.isEmpty()) {
-                for (item in listAllProducts) {
-                    var listProName = item.productsCode
-                    var patternProName = input
-                    var pattern = Pattern.compile(patternProName, Pattern.CASE_INSENSITIVE)
-                    var matcher = pattern.matcher(listProName)
-                    if (matcher.lookingAt()) {
-                        listPro.add(item)
+
+            try {
+                if (listPro.isEmpty()) {
+                    for (item in listAllProducts) {
+                        var listProName = item.productsCode
+                        var patternProName = input
+                        var pattern = Pattern.compile(patternProName, Pattern.CASE_INSENSITIVE)
+                        var matcher = pattern.matcher(listProName)
+                        if (matcher.lookingAt()) {
+                            listPro.add(item)
+                        }
                     }
+
                 }
+            }catch (ex : java.lang.Exception){
 
             }
 
         }
 
         datagetProducts.postValue(listPro)
+
+
         return datagetProducts
     }
 

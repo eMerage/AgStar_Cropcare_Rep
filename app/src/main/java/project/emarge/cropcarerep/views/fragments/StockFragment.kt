@@ -114,6 +114,7 @@ class StockFragment : Fragment() {
             AdapterView.OnItemClickListener { parent, _, position, _ ->
                 var selectedPro: Products = parent.getItemAtPosition(position) as Products
                 getSearchProducts(selectedPro.productsCode.toString())
+                autoCompleteTextView_staock_products.setText("")
             }
 
 

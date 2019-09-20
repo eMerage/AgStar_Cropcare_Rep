@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.TextView;
+
 import project.emarge.cropcarerep.R;
 import project.emarge.cropcarerep.models.datamodel.Products;
 
@@ -82,14 +83,20 @@ public class AutoCompleteProductsAdapter extends ArrayAdapter<Products> {
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            List<Products> filterList = (ArrayList<Products>) results.values;
-            if (results != null && results.count > 0) {
-                clear();
-                for (Products people : filterList) {
-                    add(people);
-                    notifyDataSetChanged();
+            try {
+                List<Products> filterList = (ArrayList<Products>) results.values;
+                if (results != null && results.count > 0) {
+                    clear();
+                    for (Products people : filterList) {
+                        add(people);
+                        notifyDataSetChanged();
+                    }
                 }
+            } catch ( Exception ex){
+
+
             }
+
         }
     };
 }
