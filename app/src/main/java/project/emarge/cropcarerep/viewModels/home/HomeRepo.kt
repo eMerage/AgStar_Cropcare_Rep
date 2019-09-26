@@ -241,9 +241,6 @@ class HomeRepo(application: Application) {
             jsonObject.add("VisitProducts", locJsonArr)
 
 
-            println("xxxxxxxxxxxxxxxxxx : "+jsonObject)
-
-
             apiInterface.saveOrder(jsonObject)
                 .subscribeOn(Schedulers.io())
                 .doOnError { it }
@@ -341,6 +338,10 @@ class HomeRepo(application: Application) {
                 pay.paymentValue = value.toDouble()
                 if (selectedImagefilePath == Uri.EMPTY) {
 
+                    pay.paymentImage = Uri.EMPTY
+                    pay.paymentImageName =""
+                    pay.paymentImagePath = ""
+
                 } else {
                     pay.isImageFromCamera = isCam
                     pay.paymentImage = selectedImagefilePath
@@ -400,8 +401,6 @@ class HomeRepo(application: Application) {
         } else {
             progressBar.visibility = View.VISIBLE
 
-            println("cccccccc savePaymentVisitWithImageDetails 1 ")
-
 
             val jsonObject = JsonObject()
             jsonObject.addProperty("ID", visitID)
@@ -423,7 +422,6 @@ class HomeRepo(application: Application) {
             jsonObject.add("PaymentsList", locJsonArr)
 
 
-            println("cccccccc savePaymentVisitWithImageDetails : "+jsonObject)
 
             apiInterface.savePaymentVisitWithImageDetails(jsonObject)
                 .subscribeOn(Schedulers.io())
